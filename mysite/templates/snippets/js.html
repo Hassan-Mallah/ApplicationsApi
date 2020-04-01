@@ -1,0 +1,12 @@
+<script>
+function myFunction(x, y) {
+  var txt;
+  var person = prompt("Please enter new name:", x);
+  if (person == null || person == "") {
+    document.getElementById(y).name = x;
+  } else {
+    document.getElementById(y).name = person;
+  }
+
+}
+</script>

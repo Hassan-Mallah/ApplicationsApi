@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Applications | API</title>
+    {% include 'snippets/css.html' %}
+</head>
+<body>
+
+<div class="container">
+
+    <p>
+        <br/><br/>
+        Creat a new API
+        <form method="post" action="/new_key/">
+            {% csrf_token %}
+            Name: <input type="input" name="name" >
+            <input type="submit" value="Submit">
+        </form>
+    </p>
+</div>
+<div class="container">
+    <br/><br/><br/>
+    <h1>
+        Applications
+    </h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Key</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        {% for obj in object_list %}
+            <tr>
+                <td>{{ obj.id }}</td>
+                <td>{{ obj.name }}</td>
+                <td>{{ obj.key }}</td>
+                <td>
+                    <form action="/app/applications/{{ obj.id }}/">
+                        {% csrf_token %}
+                        <input name="{{ obj.id }}" type="submit" value="Test">
+                        <input type="hidden" name="groupname" value="{{ obj.id }}"/>
+                    </form>
+                </td>
+                <td>
+                    <form method="post" action="/edit/" onclick="myFunction('{{ obj.name }}', '{{ obj.id }}')">
+                        {% csrf_token %}
+                        <input type="hidden" name="groupname" value="{{ obj.id }}" id="{{ obj.id }}"/>
+                        <input type="submit" value="Edit">
+                    </form>
+                <td>
+                    <form method="post" action="/delete/">
+                        {% csrf_token %}
+                        <input name="{{ obj.id }}" type="submit" value="Delete">
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% include 'snippets/js.html' %}
+
+</body>
+
+</html>
